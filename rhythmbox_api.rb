@@ -1,18 +1,20 @@
 require "sinatra"
 require "dbus"
-require "yaml"
 
-sysbus = DBus.session_bus
+class RhythmboxApi < Sinatra::Base
 
-rb_service   = sysbus["org.mpris.MediaPlayer2.rhythmbox"]
-rb_player    = rb_service.object "/org/mpris/MediaPlayer2"
-rb_player.introspect
-rb_interface = rb_player["org.mpris.MediaPlayer2.Player"]
+  sysbus = DBus.session_bus
 
-get "/playpause" do
-  rb_interface.PlayPause
-end
+  rb_service = sysbus["org.mpris.MediaPlayer2.rhythmbox"]
+  rb_player = rb_service.object "/org/mpris/MediaPlayer2"
+  rb_player.introspect
+  rb_interface = rb_player["org.mpris.MediaPlayer2.Player"]
 
-get "/next" do
-  rb_interface.Next
+  get "/playpause" do
+    rb_interface.PlayPause
+  end
+
+  get "/next" do
+    rb_interface.Next
+  end
 end
