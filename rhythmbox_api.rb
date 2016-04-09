@@ -17,4 +17,8 @@ class RhythmboxApi < Sinatra::Base
   get "/next" do
     rb_interface.Next
   end
+
+  get "/pause" do
+    rb_interface.Pause
+  end
 end
